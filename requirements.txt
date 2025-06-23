@@ -6,7 +6,9 @@ scikit-learn
 catboost
 xgboost
 dill
+lightgbm
 flask      
 joblib
 gunicorn
+pycaret
 -e .
