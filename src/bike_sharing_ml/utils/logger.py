@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 # Vaqtni kursatadigan log_file yasash
-LOG_FILE = f"{datetime.now().strftime("%d_%m_%Y, %H:%M:%S")}.log"
+LOG_FILE = f"{datetime.now().strftime('%d_%m_%Y, %H_%M_%S')}.log"
 
 
 # log lar uchun folder ochish
