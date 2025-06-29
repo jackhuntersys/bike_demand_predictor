@@ -18,14 +18,16 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from src.bike_sharing_ml.utils.exception import CustomException
 from src.bike_sharing_ml.utils.logger import logging
 from src.bike_sharing_ml.utils import save_object
+from .dataset import df
 
 # class for data transformation inputs and configuration
 @dataclass # decorator, we can directly define class variables
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join('processed', "preprocessor.pkl")
 
 class DataTransformation:
-    def __init__(self):
+    def __init__(self ,dataset):
+        self.dataset = dataset
         self.data_transformation_config = DataTransformationConfig()
     
     def get_data_transformer_object(self):  # to create the pickle files to perform data transformation
@@ -33,14 +35,17 @@ class DataTransformation:
         This functions is responsible for data transformation
         """
         try:
-            numerical_columns = ['writing_score', 'reading_score']   df.select_dtypes(include=['int64', 'float64']).columns.tolist()
-            categorical_cloumns = ['gender', 'race_ethnicity', 'parental_level_of_education', 'lunch', 'test_preparation_course']
+            numerical_columns = self.dataset.select_dtypes(include=['int64', 'float64']).columns.tolist()
+            categorical_cloumns = self.dataset.select_dtypes(include=['object']).columns.tolist()
 
+#TODO: shu yerdan davom et
             # create a pipeline and handle missing values
             numerical_pipeline = Pipeline(
                 steps=[("imputer", SimpleImputer(strategy="median")),
                        ("scaler", StandardScaler())]
             )
+
+            #TODO: preprocessor ni boshqatdan yasash kerak umumiy qilib
 
             logging.info("Numerical columns standad scaling completed")
 
@@ -65,6 +70,7 @@ class DataTransformation:
             raise CustomException(e, sys) # type: ignore
     
     def initiate_data_transformation(self, train_path, test_path):
+        #TODO: bu funksiya data ingestion dan kelgan train va test path larni qabul qiladi va train qiladi.
 
         try:
             train_df = pd.read_csv(train_path)
