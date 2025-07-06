@@ -17,17 +17,17 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from src.bike_sharing_ml.utils.exception import CustomException
 from src.bike_sharing_ml.utils.logger import logging
-from src.bike_sharing_ml.utils import save_object
-from .dataset import df
+from src.bike_sharing_ml.utils.utils import save_object
+# from data_ingestion import df
 
 # class for data transformation inputs and configuration
 @dataclass # decorator, we can directly define class variables
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('processed', "preprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join('database/processed', "preprocessor.pkl")
 
 class DataTransformation:
-    def __init__(self ,dataset):
-        self.dataset = dataset
+    def __init__(self):
+        # self.dataset = pd.read_csv(r'D:\2025 lessons\AI+ML course amaliyot\Datasets\seoul_bike_sharing_demand\SeoulBikeData.csv', encoding='cp949')
         self.data_transformation_config = DataTransformationConfig()
     
     def get_data_transformer_object(self):  # to create the pickle files to perform data transformation
@@ -35,8 +35,20 @@ class DataTransformation:
         This functions is responsible for data transformation
         """
         try:
-            numerical_columns = self.dataset.select_dtypes(include=['int64', 'float64']).columns.tolist()
-            categorical_cloumns = self.dataset.select_dtypes(include=['object']).columns.tolist()
+            numerical_columns = ['Hour', 
+                                 'Temperature(캜)', 
+                                 'Humidity(%)', 
+                                 'Wind speed (m/s)', 
+                                 'Visibility (10m)', 
+                                 'Dew point temperature(캜)',
+                                 'Solar Radiation (MJ/m2)',
+                                 'Rainfall(mm)',
+                                 'Snowfall (cm)',
+                                 'Year', 
+                                 'Month',
+                                 'Day']
+            
+            categorical_columns = ['Seasons', 'Holiday', 'Functioning Day']
 
 #TODO: shu yerdan davom et
             # create a pipeline and handle missing values
@@ -47,7 +59,7 @@ class DataTransformation:
 
             #TODO: preprocessor ni boshqatdan yasash kerak umumiy qilib
 
-            logging.info("Numerical columns standad scaling completed")
+            logging.info("Numerical columns standard scaling completed")
 
             categorical_pipeline = Pipeline(
                 steps=[("imputer", SimpleImputer(strategy="most_frequent")),
@@ -61,7 +73,7 @@ class DataTransformation:
             preprocessor = ColumnTransformer(
                 [
                     ("num_pipeline", numerical_pipeline, numerical_columns),
-                    ("cat_pipelines", categorical_pipeline, categorical_cloumns)
+                    ("cat_pipelines", categorical_pipeline, categorical_columns)
                 ]
             )
 
@@ -69,35 +81,41 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys) # type: ignore
     
-    def initiate_data_transformation(self, train_path, test_path):
+    def initiate_data_transformation(self, train_data_path, test_data_path):
         #TODO: bu funksiya data ingestion dan kelgan train va test path larni qabul qiladi va train qiladi.
 
         try:
-            train_df = pd.read_csv(train_path)
-            test_df = pd.read_csv(test_path)
+            train_df = pd.read_csv(train_data_path)
+            test_df = pd.read_csv(test_data_path)
 
             logging.info("Read train and test data completed")
 
             logging.info("Obtaining preprocessing object")
             preprocessing_obj = self.get_data_transformer_object()
 
-            target_column_name = "math_score"
+            target_column_name = 'Rented Bike Count'
 
-            numerical_columns = ['writing_score', 'reading_score']
-
-            input_feature_train_df = train_df.drop(columns= [target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns= [target_column_name], axis=1)
+            input_feature_train_df = train_df.drop(columns= [target_column_name])
+            
+
+            input_feature_test_df = test_df.drop(columns= [target_column_name])
             target_feature_test_df = test_df[target_column_name]
+            
 
             logging.info(f"Applying preprocessing object on training dataframe and testing dataframe.")
 
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
-            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
-            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+       
+            # print(np.array(target_feature_train_df).size)
+            # print(np.array(input_feature_train_arr).size)
+            # print(pd.DataFrame(input_feature_test_arr).head())
+
+            train_arr = np.c_[np.array(input_feature_train_arr), np.array(target_feature_train_df)]
+            test_arr = np.c_[np.array(input_feature_test_arr), np.array(target_feature_test_df)]
 
             logging.info(f"Saved preprocessing object.")
 
