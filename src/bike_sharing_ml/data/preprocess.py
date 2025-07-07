@@ -5,7 +5,7 @@
 # imports
 import os
 import sys
-import numpy as np
+
 from dataclasses import dataclass
 
 import numpy as np
@@ -116,6 +116,9 @@ class DataTransformation:
 
             train_arr = np.c_[np.array(input_feature_train_arr), np.array(target_feature_train_df)]
             test_arr = np.c_[np.array(input_feature_test_arr), np.array(target_feature_test_df)]
+
+
+            # print(train_arr)
 
             logging.info(f"Saved preprocessing object.")
 
