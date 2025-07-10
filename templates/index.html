@@ -3,13 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/lib.min.js" integrity="sha512-tE7j0ptGYRtx0sHRAOkHNLAuIqVW7udzmjvNh1A6vIEnWUJnx7j7khwTEjemjDaauV+lHo0jEtdW8jn5weoxhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Bike Demand Project</title>
-    <h1>Bike Demand Prediction Project</h1>
+    
 </head>
-<body class="bg-cover" style="background-image: url('./bgphoto.jpg')" >
+<body class="flex flex-col  justify-center items-center w-full  space-x-4" style="background-image: url('https://images.unsplash.com/photo-1657967783660-7f6d2c40d114?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; opacity: 0.5;">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 mt-8 mb-8">
+        <h1 class="red-900">Bike Demand Prediction Project</h1>
+        <h2 class="text-2xl font-bold mb-4">Welcome to the Bike Demand Prediction Project</h2>
+        <p class="mb-4">This project aims to predict bike demand using various machine learning techniques.</p>
+        <p class="mb-4">You can explore the project by clicking the links below </p>
+    </div>
     
-    
+    <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 ">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Environmental Data Input</h2>
+        <form>
+            <!-- Date Field -->
+            <div class="mb-4">
+                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date</label>
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                >
+            </div>
+
+            <!-- Hour Field -->
+            <div class="mb-4">
+                <label for="hour" class="block text-gray-700 text-sm font-bold mb-2">Hour</label>
+                <input
+                    type="time"
+                    id="hour"
+                    name="hour"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                >
+            </div>
+
+            <!-- Holiday Checkbox -->
+            <div class="mb-4 flex items-center">
+                <input
+                    type="checkbox"
+                    id="holiday"
+                    name="holiday"
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                >
+                <label for="holiday" class="ml-2 block text-gray-700 text-sm font-bold">Holiday</label>
+            </div>
+
+            <!-- Functioning Day Checkbox -->
+            <div class="mb-4 flex items-center">
+                <input
+                    type="checkbox"
+                    id="functioningDay"
+                    name="functioningDay"
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                >
+                <label for="functioningDay" class="ml-2 block text-gray-700 text-sm font-bold">Functioning Day</label>
+            </div>
+
+            <!-- Temperature Field (℃) -->
+            <div class="mb-4">
+                <label for="temperature" class="block text-gray-700 text-sm font-bold mb-2">Temperature (℃)</label>
+                <input
+                    type="number"
+                    id="temperature"
+                    name="temperature"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 25.5"
+                >
+            </div>
+
+            <!-- Humidity Field (%) -->
+            <div class="mb-4">
+                <label for="humidity" class="block text-gray-700 text-sm font-bold mb-2">Humidity (%)</label>
+                <input
+                    type="number"
+                    id="humidity"
+                    name="humidity"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 60.0"
+                >
+            </div>
+
+            <!-- Wind Speed Field (m/s) -->
+            <div class="mb-4">
+                <label for="windSpeed" class="block text-gray-700 text-sm font-bold mb-2">Wind speed (m/s)</label>
+                <input
+                    type="number"
+                    id="windSpeed"
+                    name="windSpeed"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 3.2"
+                >
+            </div>
+
+            <!-- Visibility Field (10m) -->
+            <div class="mb-4">
+                <label for="visibility" class="block text-gray-700 text-sm font-bold mb-2">Visibility (10m)</label>
+                <input
+                    type="number"
+                    id="visibility"
+                    name="visibility"
+                    step="1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 1000"
+                >
+            </div>
+
+            <!-- Dew Point Temperature Field (℃) -->
+            <div class="mb-4">
+                <label for="dewPointTemperature" class="block text-gray-700 text-sm font-bold mb-2">Dew point temperature (℃)</label>
+                <input
+                    type="number"
+                    id="dewPointTemperature"
+                    name="dewPointTemperature"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 15.0"
+                >
+            </div>
+
+            <!-- Solar Radiation Field (MJ/m2) -->
+            <div class="mb-4">
+                <label for="solarRadiation" class="block text-gray-700 text-sm font-bold mb-2">Solar Radiation (MJ/m²)</label>
+                <input
+                    type="number"
+                    id="solarRadiation"
+                    name="solarRadiation"
+                    step="0.01"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 0.55"
+                >
+            </div>
+
+            <!-- Rainfall Field (mm) -->
+            <div class="mb-4">
+                <label for="rainfall" class="block text-gray-700 text-sm font-bold mb-2">Rainfall (mm)</label>
+                <input
+                    type="number"
+                    id="rainfall"
+                    name="rainfall"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 2.3"
+                >
+            </div>
+
+            <!-- Snowfall Field (cm) -->
+            <div class="mb-4">
+                <label for="snowfall" class="block text-gray-700 text-sm font-bold mb-2">Snowfall (cm)</label>
+                <input
+                    type="number"
+                    id="snowfall"
+                    name="snowfall"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 0.0"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex items-center justify-center">
+                <button
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                    Submit Data
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
