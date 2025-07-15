@@ -22,27 +22,59 @@
             <!-- Date and Hour Fields in one flex row -->
             <div class="mb-4 flex flex-col sm:flex-row sm:space-x-4">
                 <!-- Date Field -->
-                <div class="mb-4 sm:mb-0 sm:w-1/2">
-                    <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date</label>
-                    <input
-                        type="date"
-                        id="date"
-                        name="date"
+                <div class="mb-4 sm:mb-0 sm:w-3/4 flex flex-row  ">
+                    <div class="mr-4 sm:w-1/2">
+                        <label for="Year" class="block text-gray-700 text-sm font-bold mb-2">Year</label>
+                        <input
+                            type="number"
+                            id="year"
+                            name="year"
+                            class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="year"
+                            min="2020"
+                            required
+                        >
+                    </div>
+                    <div class="mr-4 sm:w-3/4">
+                        <label for="month" class="block text-gray-700 text-sm font-bold mb-2">Month</label>
+                        <input
+                            type="number"
+                            id="month"
+                            name="month"
+                            class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="month"
+                            min="1"
+                            max="12"
+                            required
+                        >
+                    </div>
+                    <div class="sm:w-3/4">
+
+                        <label for="day" class="block text-gray-700 text-sm font-bold mb-2">Day</label>
+                        <input
+                        type="number"
+                        id="day"
+                        name="day"
                         class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value="01/01/2025"
+                        placeholder="day"
+                        min="1"
+                        max="31"
                         required
-                    >
+                        >
+                    </div>
                 </div>
 
                 <!-- Hour Field -->
-                <div class="sm:w-1/2">
+                <div class="sm:w-1/4">
                     <label for="hour" class="block text-gray-700 text-sm font-bold mb-2">Hour</label>
                     <input
-                        type="time"
+                        type="number"
                         id="hour"
                         name="hour"
                         class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value="08:00"
+                        value="hour"
+                        max="24"
+                        min="0"
                         required
                     >
                 </div>
@@ -53,14 +85,31 @@
                 <!-- Holiday Checkbox -->
                 <!-- Added flex-grow to make it expand and fill available space -->
                 <div class="mb-4 sm:mb-0 flex flex-row items-center justify-center border border-gray-300 rounded-md p-3 flex-grow">
-                    <input
-                        type="checkbox"
-                        id="holiday"
-                        name="holiday"
-                        value="yes"
-                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    >
-                    <label for="holiday" class="ml-2 block text-gray-700 text-sm font-bold">Holiday</label>
+                    <label class="block text-gray-700 text-sm font-bold mr-2">Holiday :</label>
+                    <div class="flex items-center space-x-2 ml-2 mr-2">
+                        <input
+                            type="radio"
+                            id="holiday"
+                            name="holiday"
+                            value="Holiday"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        >
+                        <label for="holiday" class="ml-2 block text-gray-700 text-sm font-bold">Yes</label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            type="radio" 
+                            name="holiday" 
+                            id="noHoliday"
+                            value="No Holiday"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            checked 
+                        >
+                        <label for="noHoliday" class="ml-2 block text-gray text-sm font-bold">No</label>
+
+                    </div>
+
+                    
                 </div>
 
                 <!-- Functioning Day Radio Buttons (Yes/No) -->
@@ -73,7 +122,7 @@
                                 type="radio"
                                 id="functioningDayYes"
                                 name="functioningDay"
-                                value="yes"
+                                value="Yes"
                                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                                 checked
                             >
@@ -84,7 +133,7 @@
                                 type="radio"
                                 id="functioningDayNo"
                                 name="functioningDay"
-                                value="no"
+                                value="No"
                                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                             >
                             <label for="functioningDayNo" class="ml-2 block text-gray-700 text-sm">No</label>
@@ -102,10 +151,10 @@
                         class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                         <option value="">Select</option>
-                        <option value="spring">Spring</option>
-                        <option value="summer">Summer</option>
-                        <option value="autumn">Autumn</option>
-                        <option value="winter">Winter</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Autumn">Autumn</option>
+                        <option value="Winter">Winter</option>
                     </select>
                 </div>
             </div>
@@ -116,9 +165,12 @@
                     type="number"
                     id="temperature"
                     name="temperature"
-                    step="0.1"
+                    step="0.5"
                     class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g., 25.5"
+                    placeholder="e.g., 25.0"
+                    min="-20"
+                    max="40"
+                    
                 >
             </div>
 
@@ -132,6 +184,8 @@
                     step="0.1"
                     class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="e.g., 60.0"
+                    min="20"
+                    max="90"
                 >
             </div>
 
@@ -171,6 +225,7 @@
                     step="0.1"
                     class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="e.g., 15.0"
+                    
                 >
             </div>
 
@@ -217,9 +272,15 @@
             <div class="flex items-center justify-center">
                 <button
                     type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                    class=" mr-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                 >
                     Submit Data
+                </button>
+                <button 
+                    type="reset" 
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                    Clear
                 </button>
             </div>
         </form>
