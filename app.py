@@ -18,6 +18,9 @@ from src.bike_sharing_ml.data.preprocess import DataTransformation
 
 preprocessor_obj_file_path = os.path.join('database/processed', "preprocessor.pkl")
 preprocessor = joblib.load(preprocessor_obj_file_path)
+model_path = os.path.join('models', 'trained_model.pkl')
+
+modell = joblib.load(model_path)
 
 app = Flask(__name__)
 
@@ -50,11 +53,11 @@ def predict_user_data():
     }
 
     user_data = pd.DataFrame([user_input_data])
-    # data_df = preprocessor.transform((user_data))
-
+    data_df = preprocessor.transform((user_data))
+    y_pred = modell.predict(pd.DataFrame(data_df))
     logging.info(f"User input data: {user_input_data}")
-    return jsonify(user_data.to_dict(orient='records'))
-    # return render_template('predict.html', user_input=user_input_data)  # Add this line
+    # return jsonify(pd.DataFrame(data_df).to_dict(orient='records'))
+    return render_template('predict.html', user_input=int(y_pred))  # Add this line
 
 
 if __name__ == '__main__':
