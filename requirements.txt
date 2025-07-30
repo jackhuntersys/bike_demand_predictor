@@ -1,5 +1,5 @@
 pandas
-python == 3.11.13
+python
 numpy
 seaborn
 matplotlib
