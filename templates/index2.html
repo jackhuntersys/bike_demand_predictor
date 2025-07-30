@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Bike Demand Project</title>
+    
+</head>
+<body class="flex flex-col text-black justify-center items-center w-full  space-x-4" style="background-image: url('https://images.unsplash.com/photo-1657967783660-7f6d2c40d114?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; opacity: 0.85;">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 mt-8 mb-8">
+       
+        <h2 class="text-2xl  font-bold mb-4">Welcome to the Bike Demand Prediction Project</h2>
+        <p class="mb-4">This project aims to predict bike demand using various machine learning techniques.</p>
+        <p class="mb-4">You can explore the project by clicking the links below </p>
+    </div>
+    
+     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md lg:max-w-[50vw]">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Environmental Data Input</h2>
+        <form action = "{{ url_for('predict_user_data') }}" method="POST" class="space-y-4">
+            <!-- Date and Hour Fields in one flex row -->
+            <div class="mb-4 flex flex-col sm:flex-row sm:space-x-4">
+                <!-- Date Field -->
+                <div class="mb-4 sm:mb-0 sm:w-3/4 flex flex-row  ">
+                    <div class="mr-4 sm:w-1/2">
+                        <label for="Year" class="block text-gray-700 text-sm font-bold mb-2">Year</label>
+                        <input
+                            type="number"
+                            id="year"
+                            name="year"
+                            class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="year"
+                            min="2015"
+                            required
+                        >
+                    </div>
+                    <div class="mr-4 sm:w-3/4">
+                        <label for="month" class="block text-gray-700 text-sm font-bold mb-2">Month</label>
+                        <input
+                            type="number"
+                            id="month"
+                            name="month"
+                            class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="month"
+                            min="1"
+                            max="12"
+                            required
+                        >
+                    </div>
+                    <div class="sm:w-3/4">
+
+                        <label for="day" class="block text-gray-700 text-sm font-bold mb-2">Day</label>
+                        <input
+                        type="number"
+                        id="day"
+                        name="day"
+                        class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="day"
+                        min="1"
+                        max="31"
+                        required
+                        >
+                    </div>
+                </div>
+
+                <!-- Hour Field -->
+                <div class="sm:w-1/4">
+                    <label for="hour" class="block text-gray-700 text-sm font-bold mb-2">Hour</label>
+                    <input
+                        type="number"
+                        id="hour"
+                        name="hour"
+                        class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value="hour"
+                        max="24"
+                        min="0"
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Holiday, Functioning Day, and Seasons in one flex row -->
+            <div class="mb-4 flex flex-col sm:flex-row sm:space-x-4 justify-start">
+                <!-- Holiday Checkbox -->
+                <!-- Added flex-grow to make it expand and fill available space -->
+                <div class="mb-4 sm:mb-0 flex flex-row items-center justify-center border border-gray-300 rounded-md p-3 flex-grow">
+                    <label class="block text-gray-700 text-sm font-bold mr-2">Holiday :</label>
+                    <div class="flex items-center space-x-2 ml-2 mr-2">
+                        <input
+                            type="radio"
+                            id="holiday"
+                            name="holiday"
+                            value="Holiday"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        >
+                        <label for="holiday" class="ml-2 block text-gray-700 text-sm font-bold">Yes</label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            type="radio" 
+                            name="holiday" 
+                            id="noHoliday"
+                            value="No Holiday"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            checked 
+                        >
+                        <label for="noHoliday" class="ml-2 block text-gray text-sm font-bold">No</label>
+
+                    </div>
+
+                    
+                </div>
+
+                <!-- Functioning Day Radio Buttons (Yes/No) -->
+                <!-- Added flex-grow to make it expand and fill available space -->
+                <div class="mb-4 sm:mb-0 flex flex-row items-center justify-center border border-gray-300 rounded-md p-3 flex-grow">
+                    <label class="block text-gray-700 text-sm font-bold mr-2">Functioning Day:</label>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center">
+                            <input
+                                type="radio"
+                                id="functioningDayYes"
+                                name="functioningDay"
+                                value="Yes"
+                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                checked
+                            >
+                            <label for="functioningDayYes" class="ml-2 block text-gray-700 text-sm">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                type="radio"
+                                id="functioningDayNo"
+                                name="functioningDay"
+                                value="No"
+                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                            >
+                            <label for="functioningDayNo" class="ml-2 block text-gray-700 text-sm">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seasons Dropdown -->
+                <!-- Added flex-grow to make it expand and fill available space, removed sm:w-auto -->
+                <div class="flex flex-row items-center justify-center border border-gray-300 rounded-md p-3 flex-grow">
+                    <label for="season" class="block text-gray-700 text-sm font-bold mr-2">Season:</label>
+                    <select
+                        id="season"
+                        name="season"
+                        class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                        <option value="">Select</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Autumn">Autumn</option>
+                        <option value="Winter">Winter</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Temperature Field (℃) -->
+            <div class="mb-4">
+                <label for="temperature" class="block text-gray-700 text-sm font-bold mb-2">Temperature (℃)</label>
+                <input
+                    type="number"
+                    id="temperature"
+                    name="temperature"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 25.0"
+                    min="-20"
+                    max="40"
+                    
+                >
+            </div>
+
+            <!-- Humidity Field (%) -->
+            <div class="mb-4">
+                <label for="humidity" class="block text-gray-700 text-sm font-bold mb-2">Humidity (%)</label>
+                <input
+                    type="number"
+                    id="humidity"
+                    name="humidity"
+                    step="1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 60.0"
+                    min="20"
+                    max="90"
+                >
+            </div>
+
+            <!-- Wind Speed Field (m/s) -->
+            <div class="mb-4">
+                <label for="windSpeed" class="block text-gray-700 text-sm font-bold mb-2">Wind speed (m/s)</label>
+                <input
+                    type="number"
+                    id="windSpeed"
+                    name="windSpeed"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 3.2"
+                >
+            </div>
+
+            <!-- Visibility Field (10m) -->
+            <div class="mb-4">
+                <label for="visibility" class="block text-gray-700 text-sm font-bold mb-2">Visibility (10m)</label>
+                <input
+                    type="number"
+                    id="visibility"
+                    name="visibility"
+                    step="1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 1000"
+                >
+            </div>
+
+            <!-- Dew Point Temperature Field (℃) -->
+            <div class="mb-4">
+                <label for="dewPointTemperature" class="block text-gray-700 text-sm font-bold mb-2">Dew point temperature (℃)</label>
+                <input
+                    type="number"
+                    id="dewPointTemperature"
+                    name="dewPointTemperature"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 15.0"
+                    
+                >
+            </div>
+
+            <!-- Solar Radiation Field (MJ/m2) -->
+            <div class="mb-4">
+                <label for="solarRadiation" class="block text-gray-700 text-sm font-bold mb-2">Solar Radiation (MJ/m²)</label>
+                <input
+                    type="number"
+                    id="solarRadiation"
+                    name="solarRadiation"
+                    step="0.01"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 0.55"
+                >
+            </div>
+
+            <!-- Rainfall Field (mm) -->
+            <div class="mb-4">
+                <label for="rainfall" class="block text-gray-700 text-sm font-bold mb-2">Rainfall (mm)</label>
+                <input
+                    type="number"
+                    id="rainfall"
+                    name="rainfall"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 2.3"
+                >
+            </div>
+
+            <!-- Snowfall Field (cm) -->
+            <div class="mb-4">
+                <label for="snowfall" class="block text-gray-700 text-sm font-bold mb-2">Snowfall (cm)</label>
+                <input
+                    type="number"
+                    id="snowfall"
+                    name="snowfall"
+                    step="0.1"
+                    class="shadow-sm appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 0.0"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex items-center justify-center">
+                <button
+                    type="submit"
+                    class=" mr-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                    Submit Data
+                </button>
+                <button 
+                    type="reset" 
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                    Clear
+                </button>
+            </div>
+        </form>
+    </div>
+   
+</body>
+</html>

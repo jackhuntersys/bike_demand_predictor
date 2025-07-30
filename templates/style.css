@@ -1,7 +1,72 @@
-body {
-    /* background-image: url('.\images\595483.jpg'); */
-    
-    /* background-size: cover;
-    background-position: center;
-    color: #b81111; */
+/* Custom animations and styles */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in {
+    animation: slide-in 0.3s ease-out;
+}
+
+/* Toast styles */
+.toast {
+    @apply bg-card border border-border rounded-lg shadow-lg p-4 mb-2 max-w-sm;
+    animation: slide-in 0.3s ease-out;
+}
+
+.toast.success {
+    @apply border-data-success;
+}
+
+.toast.error {
+    @apply border-data-error;
+}
+
+/* Custom gradient backgrounds */
+.gradient-primary {
+    background: linear-gradient(135deg, hsl(200, 100%, 45%), hsl(180, 100%, 50%));
+}
+
+.gradient-card {
+    background: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(210, 30%, 98%));
+}
+
+/* Loading spinner */
+.spinner {
+    border: 2px solid hsl(210, 25%, 88%);
+    border-top: 2px solid hsl(200, 100%, 45%);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    height: 320px;
 }
