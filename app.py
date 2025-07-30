@@ -16,6 +16,10 @@ from src.bike_sharing_ml.utils.exception import CustomException
 from src.bike_sharing_ml.data.preprocess import DataTransformation
 
 
+print("Python version:", sys.version)
+
+
+
 preprocessor_obj_file_path = os.path.join('database/processed', "preprocessor.pkl")
 preprocessor = joblib.load(preprocessor_obj_file_path)
 model_path = os.path.join('models', 'trained_model.pkl')
