@@ -1,3 +1,4 @@
+--only-binary=:all:
 pandas
 numpy
 seaborn
